@@ -4,7 +4,7 @@
     $searchResults = "";
     $searchCount = 0;
 
-    $conn = new mysqli("localhost", name, identifier, database name);
+    $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
     if ($conn->connect_error)
     {
         returnWithError( $conn->connect_error);
@@ -12,7 +12,7 @@
     else
     {
         $stmt = $conn->prepare("SELECT Name FROM Contacts WHERE Name like ? and UserID=?");
-        $contactName = "%" .$indData["search"] . "%";
+        $contactName = "%" .$inData["search"] . "%";
         $stmt->bind_param("ss", $contactName, $inData["userId"]);
         $stmt->execute();
 
