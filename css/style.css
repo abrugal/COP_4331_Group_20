@@ -1,3 +1,9 @@
 .loginPage {
-    background-color: #7B3B3B
+    background: rgb(0,64,140);
+    background: linear-gradient(90deg, rgba(0,64,140,1) 0%, rgba(131,13,163,1) 36%, rgba(187,21,0,1) 97%);
+}
+
+.logo {
+    width: 10%;
+    height: 10%;
 }
