@@ -4,6 +4,7 @@
     $searchResults = "";
     $searchCount = 0;
 
+    // establish sql connection with database
     $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
     if ($conn->connect_error)
     {
