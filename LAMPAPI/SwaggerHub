@@ -1,0 +1,154 @@
+swagger: '2.0'
+info:
+  description: This is the API documentation for Group 20's Contacts App
+  version: 1.0.0
+  title: Contacts App
+  # put the contact info for your development or API team
+  contact:
+    email: NaimShaqqou@knights.ucf.edu
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+
+paths:
+  /Login.php:
+    post:
+      tags:
+      - Users
+      summary: Logs into contacts app
+      operationId: doLogin
+      description: Logs into contacts app
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: loginItem
+        description: Login
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+
+      
+*************PLACE REGISTER ENDPOINT BELOW*************
+
+*************PLACE ADD/DELETE ENDPOINTS BELOW*************
+
+  /SearchContact.php:
+    post:
+      tags:
+      - Search
+      summary: Searches contacts
+      operationId: searchContact
+      description: Searches contacts from the contacts app database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: searchItem
+        description: Contact Search
+        schema:
+          $ref: '#/definitions/Search'
+      responses:
+        200:
+          description: OK
+        400:
+          description: URL Not Found
+          
+  /UpdateContact.php:
+    post:
+      tags:
+      - update
+      summary: Updates Contacts
+      operationId: updateContact
+      description:  Updates contacts in the contacts app database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: updateItem
+        description: Contact Update
+        schema:
+          $ref: '#/definitions/Update'
+        responses:
+          200:
+            description: OK
+          400:
+            description: URL Not Found
+        
+
+definitions:
+  Login:
+    type: object
+    required:
+    - login
+    - password
+    properties:
+      login:
+        type: string
+        example: "fred"
+      password:
+        type: string
+        example: "secret"
+        
+  Register:
+    ***Place register definition here***
+    
+  Add:
+    *** place add definition here**
+    
+  Delete:
+    ** place delete definition here**
+    
+  Search:
+    type: object
+    required:
+    - userId
+    - search
+    properties:
+      userId:
+        type: integer
+        example: 3
+      search:
+        type: string
+        example: "john"
+        
+  Update:
+    type: object
+    required:
+    - contact
+    - userId
+    - updateWith
+    properties:
+      contact:
+        type: string
+        example: "mop"
+      userId:
+        type: integer
+        example: 4
+      updateWith:
+        type: string
+        example: "bob"
+
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /Group-20/contacts/1.0.0
+schemes:
+ - https
