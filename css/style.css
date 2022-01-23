@@ -1,9 +1,19 @@
-.loginPage {
-    background: rgb(0,64,140);
-    background: linear-gradient(90deg, rgba(0,64,140,1) 0%, rgba(131,13,163,1) 36%, rgba(187,21,0,1) 97%);
+.page {
+    /* background: rgb(0,64,140);
+    background: linear-gradient(90deg, rgba(0,64,140,1) 0%, rgba(131,13,163,1) 36%, rgba(187,21,0,1) 97%); */
+    background-color: #293136;
 }
 
 .logo {
     width: 10%;
     height: 10%;
 }
+
+.background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+  }

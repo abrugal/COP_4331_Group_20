@@ -1,3 +1,4 @@
+
 // Login function
 // What else do i need to add
 
@@ -116,4 +117,12 @@ function submitContactForm() {
 
 	// You should call doAdd here and pass in the values to be saved in the database
 }
+
+window.onload = function() {
+	Particles.init({
+		selector: '.background',
+		color: '#00B6FF',
+		connectParticles: true
+	});
+  };
 
