@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="lib/boostrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Login</title>
+  </head>
+
+
+  <body style="background-color: lightgrey;">
+      <div class="container">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddContactModal">Add Contact</button>
+          <div class="row h-50 d-flex justify-content-center align-items-center">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Email</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody class="table-light" id="contactsTableBody">
+                    <tr>
+                        <td>Test1</td>
+                        <td>Test1</td>
+                        <td>Test1</td>
+                        <td>Test1</td>
+                        <td>Test1</td>
+                        <td><img src="images/trash-svgrepo-com.svg" alt="Trashcan" onclick="doDelete(this)"></td>
+                      </tr>
+                      <tr>
+                        <td>Test2</td>
+                        <td>Test2</td>
+                        <td>Test2</td>
+                        <td>Test2</td>
+                        <td>Test2</td>
+                        <td><img src="images/trash-svgrepo-com.svg" alt="Trashcan" onclick="doDelete(this)"></td>
+                      </tr>
+                      <tr>
+                        <td>Test3</td>
+                        <td>Test3</td>
+                        <td>Test3</td>
+                        <td>Test3</td>
+                        <td>Test3</td>
+                        <td><img src="images/trash-svgrepo-com.svg" alt="Trashcan" onclick="doDelete(this)"></td>
+                      </tr>
+    
+                </tbody>
+            </table>
+          </div>
+      </div>
+      
+      <!-- Popup window to add Contact-->
+      <div class="modal fade" id="AddContactModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Contact</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetContactFormFields()"></button>
+            </div>
+            <div class="modal-body">
+              <form id="contactForm">
+                <div class="form-group p-2">
+                  <input type="text" class="form-control" id="firstName" placeholder="First Name">
+                </div>
+                <div class="form-group p-2">
+                  <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+                </div>
+                <div class="form-group p-2">
+                  <input type="text" class="form-control" id="address" placeholder="Address">
+                </div>
+                <div class="form-group p-2">
+                  <input type="text" class="form-control" id="email" placeholder="Email">
+                </div>
+                <div class="form-group p-2">
+                  <input type="text" class="form-control" id="phoneNum" placeholder="Phone Number">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="resetContactFormFields()">Cancel</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="submitContactForm()">Add Contact</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script src="lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="lib/boostrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
