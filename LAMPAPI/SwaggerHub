@@ -41,16 +41,35 @@ paths:
           description: OK
         404:
           description: URL Not Found
-
-      
-*************PLACE REGISTER ENDPOINT BELOW*************
-
-*************PLACE ADD/DELETE ENDPOINTS BELOW*************
+          
+  
+  /Register.php:
+    post:
+      tags:
+      - Users
+      summary: Registers a new user
+      operationId: doRegister
+      description: registers a new user to the application
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: registerItem
+        description: register
+        schema:
+          $ref: '#/definitions/Register'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
 
   /SearchContact.php:
     post:
       tags:
-      - Search
+      - contacts
       summary: Searches contacts
       operationId: searchContact
       description: Searches contacts from the contacts app database
@@ -61,7 +80,7 @@ paths:
       parameters:
       - in: body
         name: searchItem
-        description: Contact Search
+        description: contact search
         schema:
           $ref: '#/definitions/Search'
       responses:
@@ -73,7 +92,7 @@ paths:
   /UpdateContact.php:
     post:
       tags:
-      - update
+      - contacts
       summary: Updates Contacts
       operationId: updateContact
       description:  Updates contacts in the contacts app database
@@ -87,11 +106,58 @@ paths:
         description: Contact Update
         schema:
           $ref: '#/definitions/Update'
-        responses:
-          200:
-            description: OK
-          400:
-            description: URL Not Found
+      responses:
+        200:
+          description: OK
+        400:
+          description: URL Not Found
+          
+  /AddContact.php:
+    post:
+      tags:
+      - contacts
+      summary: Adds a new contact
+      operationId: addContact
+      description: adds a new contact to the logged in user's account
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: contactItem
+        description: Contact Information
+        schema:
+          $ref: '#/definitions/Contact'
+      responses:
+        200:
+          description: OK
+        400:
+          description: URL Not Found
+          
+  /DeleteContact.php:
+    post:
+      tags:
+      - contacts
+      summary: Deletes a contact
+      operationId: deleteContact
+      description: deletes a contact from the logged in user's account
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: contactItem
+        description: Contact
+        schema:
+          $ref: '#/definitions/Contact'
+      responses:
+        200:
+          description: OK
+        400:
+          description: URL Not Found
+
         
 
 definitions:
@@ -109,14 +175,43 @@ definitions:
         example: "secret"
         
   Register:
-    ***Place register definition here***
+    type: object
+    required:
+    - firstName
+    - lastName
+    - login
+    - password
+    properties:
+      firstName:
+        type: string
+        example: "john"
+      lastName:
+        type: string
+        example: "doe"
+      login:
+        type: string
+        example: "username"
+      password:
+        type: string
+        example: "password"
     
-  Add:
-    *** place add definition here**
-    
-  Delete:
-    ** place delete definition here**
-    
+  Contact:
+    type: object
+    required:
+    - userId
+    - firstName
+    - lastName
+    properties:
+      userId:
+        type: integer
+        example: 1
+      firstName:
+        type: string
+        example: "john"
+      lastName:  
+        type: string
+        example: "Doe"
+        
   Search:
     type: object
     required:
@@ -147,8 +242,7 @@ definitions:
         type: string
         example: "bob"
 
-# Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
-basePath: /Group-20/contacts/1.0.0
+host: 143.198.109.82
+basePath: /LAMPAPI/
 schemes:
- - https
+  - http
