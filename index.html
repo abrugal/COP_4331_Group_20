@@ -9,10 +9,17 @@
     <link rel="stylesheet" href="css/style.css">
 
     <title>Login</title>
+    <script src="lib/jquery/jquery-3.6.0.min.js" defer></script>
+    <script src="lib/boostrap/js/bootstrap.bundle.min.js" defer></script>
+    <script src="js/particles.js" defer></script>
+    <script type="text/javascript" src="js/md5.js" defer></script>
+    <script src="js/script.js" defer></script>
   </head>
 
 
-  <body class="page">
+  <body class="page registerPage">
+
+
     <div class="container">
       <div class="row h-100 d-flex justify-content-center align-items-center"> 
         <div class="col col-xl-10">
@@ -23,25 +30,41 @@
               </div>
               <div class="col-lg-7 col-md-6 d-flex align-items-center">
                 <div class="card-body p-5">
-                  <form>
+                  <form id="registerForm">
 
                     <div class="d-flex align-items-center mb-4">
                       <img class="logo" src="images/logo.svg" class="img-fluid" alt="Circle logo">
                       <span class="h1 mb-0 ms-3">Contacts</span>
                     </div>
                     
-                    <h5 class="mb-3">Sign into your account</h5>
+                    <h5 class="mb-3">Create an account</h5>
+
+
+
+                    <div class="row mb-3">
+                      <div class="col">
+                        <label class="h6">First Name: </label>
+                        <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                      </div>
+                      <div class="col">
+                        <label class="h6">Last Name: </label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                      </div>
+                    </div>
+
                     <div class="form-group mb-3">
-                      <input type="text" class="form-control" id="username" placeholder="Username">
+                      <label class="h6">Username: </label>
+                      <input type="text" class="form-control" id="username" placeholder="Username" required>
                     </div>
                     <div class="form-group mb-3">
-                      <input type="password" class="form-control" id="password" placeholder="Password">
+                      <label class="h6">Password: </label>
+                      <input type="password" class="form-control" id="password" placeholder="Password" required>
                     </div>
-                    <button class="btn btn-info" type="submit">Login</button>
 
-                    <p class="pt-4">Don't have an account? <a href="register.html">Register here</a></p>
+                    
+                    <button class="btn btn-info" type="submit">Sign Up</button>
 
-                    <p class="pt-4">This is for development testing. <a href="home.html">Home page</a></p>
+                    <p class="pt-4">Have an account? <a href="index.html">Login here</a></p>
                   </form>
                 </div>
               </div>
@@ -51,9 +74,5 @@
           
       </div>
       <canvas class="background"></canvas>
-    <script src="lib/jquery/jquery-3.6.0.min.js"></script>
-    <script src="lib/boostrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/particles.js"></script>
-    <script src="js/script.js"></script>
   </body>
 </html>
