@@ -17,9 +17,7 @@
   </head>
 
 
-  <body class="page registerPage">
-
-
+  <body class="page loginPage">
     <div class="container">
       <div class="row h-100 d-flex justify-content-center align-items-center"> 
         <div class="col col-xl-10">
@@ -30,48 +28,39 @@
               </div>
               <div class="col-lg-7 col-md-6 d-flex align-items-center">
                 <div class="card-body p-5">
-                  <form id="registerForm">
+                  <form id="loginForm">
 
                     <div class="d-flex align-items-center mb-4">
                       <img class="logo" src="images/logo.svg" class="img-fluid" alt="Circle logo">
                       <span class="h1 mb-0 ms-3">Contacts</span>
                     </div>
                     
-                    <h5 class="mb-3">Create an account</h5>
+                    <h5 class="mb-3">Sign into your account</h5>
 
 
-
-                    <div class="row mb-3">
-                      <div class="col">
-                        <label class="h6">First Name: </label>
-                        <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
-                      </div>
-                      <div class="col">
-                        <label class="h6">Last Name: </label>
-                        <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
-                      </div>
-                    </div>
-
+  
                     <div class="form-group mb-3">
                       <label class="h6">Username: </label>
                       <input type="text" class="form-control" id="username" placeholder="Username" required>
                     </div>
+
+
                     <div class="form-group mb-3">
                       <label class="h6">Password: </label>
                       <input type="password" class="form-control" id="password" placeholder="Password" required>
+                      <p id="loginResult" class="text-danger"></p>
                     </div>
+                    <button class="btn btn-info" onclick=doLogin()>Login</button>
 
-                    
-                    <button class="btn btn-info" type="submit">Sign Up</button>
+                    <p class="pt-4">Don't have an account? <a href="register.html">Register here</a></p>
 
-                    <p class="pt-4">Have an account? <a href="index.html">Login here</a></p>
+                    <p class="pt-4">This is for development testing. <a href="home.html">Home page</a></p>
                   </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
-          
       </div>
       <canvas class="background"></canvas>
   </body>

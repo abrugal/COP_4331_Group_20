@@ -17,7 +17,7 @@
   </head>
 
 
-  <body class="page">
+  <body class="page homePage">
 
 
       <div class="container">
@@ -27,7 +27,7 @@
               <div class="col col-9">
                 <div class="input-group">
                   <input type="search" class="form-control form-control-lg rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
-                  <button type="button" class="btn btn-primary" >search</button>
+                  <button type="button" class="btn btn-primary" onclick=doSearch()>search</button>
                 </div>
               </div>
               <div class="col col-3 d-flex justify-content-center align-items-center">
@@ -41,8 +41,8 @@
                           <th scope="col">First Name</th>
                           <th scope="col">Last Name</th>
                           <th scope="col">Address</th>
-                          <th scope="col">Phone Number</th>
                           <th scope="col">Email</th>
+                          <th scope="col">Phone Number</th>
                           <th scope="col"></th>
                       </tr>
                   </thead>
@@ -53,7 +53,16 @@
                           <td>Test1</td>
                           <td>Test1</td>
                           <td>Test1</td>
-                          <td><img src="images/trash-svgrepo-com.svg" class="img-fluid" alt="Trashcan" onclick="doDelete(this)"></td>
+                          <td>
+                            <div class="row">
+                              <div class="col">
+                                <img src="images/trash-svgrepo-com.svg" class="img-fluid border border-dark rounded" data-bs-toggle="modal" data-bs-target="#DeleteContactModal" alt="Trashcan" onclick=addDeleteClass(this)>
+                              </div>
+                              <div class="col">
+                                <img src="images/edit-icon.svg" class="img-fluid" data-bs-toggle="modal" data-bs-target="#EditContactModal" alt="Edit Pencil" onclick=addEditClass(this)>
+                              </div>
+                            </div>
+                          </td>
                         </tr>
                         <tr>
                           <td>Test2</td>
@@ -61,7 +70,16 @@
                           <td>Test2</td>
                           <td>Test2</td>
                           <td>Test2</td>
-                          <td><img src="images/trash-svgrepo-com.svg" class="img-fluid" alt="Trashcan" onclick="doDelete(this)"></td>
+                          <td>
+                            <div class="row">
+                              <div class="col">
+                                <img src="images/trash-svgrepo-com.svg" class="img-fluid border border-dark rounded" data-bs-toggle="modal" data-bs-target="#DeleteContactModal" alt="Trashcan" onclick=addDeleteClass(this)>
+                              </div>
+                              <div class="col">
+                                <img src="images/edit-icon.svg" class="img-fluid" data-bs-toggle="modal" data-bs-target="#EditContactModal"  alt="Edit Pencil" onclick=addEditClass(this)>
+                              </div>
+                            </div> 
+                          </td>
                         </tr>
                         <tr>
                           <td>Test3</td>
@@ -69,17 +87,31 @@
                           <td>Test3</td>
                           <td>Test3</td>
                           <td>Test3</td>
-                          <td><img src="images/trash-svgrepo-com.svg" class="img-fluid" alt="Trashcan" onclick="doDelete(this)"></td>
+                          <td>
+                            <div class="row">
+                              <div class="col">
+                                <img src="images/trash-svgrepo-com.svg" class="img-fluid border border-dark rounded" data-bs-toggle="modal" data-bs-target="#DeleteContactModal" alt="Trashcan" onclick=addDeleteClass(this)>
+                              </div>
+                              <div class="col">
+                                <img src="images/edit-icon.svg" class="img-fluid" data-bs-toggle="modal" data-bs-target="#EditContactModal" alt="Edit Pencil" onclick=addEditClass(this)>
+                              </div>
+                            </div> 
+                          </td>
                         </tr>
                   </tbody>
               </table>
+            </div>
+            <div class="row">
+              <div class="d-flex justify-content-center align-items-center">
+                <button id="load-more-button" class="btn btn-primary" onclick="increaseResults()">Load More</button>  
+              </div>
             </div>
           </div>
         </div>
       </div>
       
       <!-- Popup window to add Contact-->
-      <div class="modal fade" id="AddContactModal" tabindex="-1">
+      <div class="modal fade" id="AddContactModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -89,25 +121,86 @@
             <div class="modal-body">
               <form id="contactForm">
                 <div class="form-group p-2">
+                  <label class="h6">First Name: </label>
                   <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
                 </div>
                 <div class="form-group p-2">
+                  <label class="h6">Last Name: </label>
                   <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
                 </div>
                 <div class="form-group p-2">
+                  <label class="h6">Address: </label>
                   <input type="text" class="form-control" id="address" placeholder="Address" required>
                 </div>
                 <div class="form-group p-2">
-                  <input type="email" class="form-control" id="email" placeholder="Email" required>
+                  <label class="h6">Email: </label>
+                  <input type="email" class="form-control" id="email" placeholder="Email: email@address.com" required>
                 </div>
                 <div class="form-group p-2">
-                  <input type="tel" minlength="10" maxlength="10" class="form-control" id="phoneNum" placeholder="Phone Number" required>
+                  <label class="h6">Phone Number: </label>
+                  <input type="tel"  maxlength="10" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" class="form-control" id="phoneNum" placeholder="Phone Number: 0123456789" required>
                 </div>
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="resetContactFormFields()">Cancel</button>
-              <button type="submit" form="contactForm" class="btn btn-primary"  onclick="submitContactForm()">Add Contact</button>
+              <button id="dismissModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="resetContactFormFields()">Cancel</button>
+              <button type="submit" form="contactForm" class="btn btn-primary" onclick="submitContactForm()">Add Contact</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Popup window to delete Contact-->
+      <div class="modal fade" id="DeleteContactModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title delete-title"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick=cancelDelete()></button>
+            </div>
+            <div class="modal-footer">
+              <button id="dismissModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick=cancelDelete()>Cancel</button>
+              <button type="submit" form="contactForm" class="btn btn-primary" data-bs-dismiss="modal" onclick=doDelete()>Delete Contact</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Popup window to edit Contact-->
+      <div class="modal fade" id="EditContactModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Contact</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick=cancelEdit()></button>
+            </div>
+            <div class="modal-body">
+              <form id="editContactForm">
+                <div class="form-group p-2">
+                  <label class="h6">First Name: </label>
+                  <input type="text" class="form-control" id="editFirstName" placeholder="First Name" required>
+                </div>
+                <div class="form-group p-2">
+                  <label class="h6">Last Name: </label>
+                  <input type="text" class="form-control" id="editLastName" placeholder="Last Name" required>
+                </div>
+                <div class="form-group p-2">
+                  <label class="h6">Address: </label>
+                  <input type="text" class="form-control" id="editAddress" placeholder="Address" required>
+                </div>
+                <div class="form-group p-2">
+                  <label class="h6">Email: </label>
+                  <input type="email" class="form-control" id="editEmail" placeholder="Email: email@address.com" required>
+                </div>
+                <div class="form-group p-2">
+                  <label class="h6">Phone Number: </label>
+                  <input type="tel"  maxlength="10" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" class="form-control" id="editPhoneNum" placeholder="Phone Number: 0123456789" required>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button id="editDismissModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick=cancelEdit()>Cancel</button>
+              <button type="submit" form="editContactForm" class="btn btn-primary" onclick=doUpdate()>Save Changes</button>
             </div>
           </div>
         </div>

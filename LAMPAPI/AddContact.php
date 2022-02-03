@@ -1,7 +1,6 @@
 <?php
 $inData = getRequestInfo();
 
-
 $first_name = $inData["firstName"];
 $last_name = $inData["lastName"];
 $phone_num = $inData["phoneNumber"];
@@ -10,7 +9,7 @@ $email = $inData["email"];
 $userId = $inData["userId"];
 
 //$conn = new mysqli("localhost", "root", "Weare20Group", "COP4331");
-$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+$conn = new mysqli("127.0.0.1", "TheBeast", "WeLoveCOP4331", "COP4331");
 
 if ($conn->connect_error)
 {

@@ -1,35 +1,36 @@
 <?php
     $inData = getRequestInfo();
 
-    $searchResults = "";
+    $elementsToDisplay = $inData["numResults"];
+
+    //$searchResults[] = array();
     $searchCount = 0;
 
-    // establish sql connection with database
-    $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+    $conn = new mysqli("127.0.0.1", "TheBeast", "WeLoveCOP4331", "COP4331");
     if ($conn->connect_error)
     {
         returnWithError( $conn->connect_error);
     }
     else
     {
-        // query to search for a contact
-        // doesn't have to be a perfect match
-        $stmt = $conn->prepare("SELECT Name FROM Contacts WHERE Name like ? and UserID=?");
-        $contactName = "%" .$inData["search"] . "%";
-        $stmt->bind_param("ss", $contactName, $inData["userId"]);
+        $stmt = $conn->prepare("SELECT * FROM Contacts
+                                WHERE (FirstName like ? or LastName like ? or PhoneNumber like ? or Address like ? or Email like ?) and UserID=?");
+        $contactInfo = "%" .$inData["search"] . "%";
+        $stmt->bind_param("ssssss", $contactInfo, $contactInfo, $contactInfo, $contactInfo, $contactInfo, $inData["userId"]);
         $stmt->execute();
 
         $result = $stmt->get_result();
-    
-        // print all the results that match the query
+        $total = $stmt->affected_rows;
+
         while($row = $result->fetch_assoc())
         {
-            if($searchCount > 0)
+            if ($searchCount == $elementsToDisplay)
             {
-                $searchResult .= ",";
+                break;
             }
+
             $searchCount++;
-            $searchResults .= '"' . $row["Name"] . '"';
+            $searchResults[] = $row;
         }
 
         if ($searchCount == 0)
@@ -38,37 +39,34 @@
         }
         else
         {
-            returnWithInfo($searchResults);
+            returnWithInfo($searchResults, $searchCount, $total);
         }
 
         $stmt->close();
         $conn->close();
     }
 
-    // get input from javascript
     function getRequestInfo()
     {
         return json_decode(file_get_contents('php://input'), true);
     }
 
-    // print out result
     function sendResultInfoAsJson($obj)
     {
         header('Content-type: application/json');
         echo $obj;
     }
-    
-    // couldn't find anything
+
     function returnWithError($err)
     {
-        $retValue = '{"id":0,"firstName":"","lastName":"","error":"'. $err . '"}';
+        $retValue = '{"id":0,"total":0,"numResultsFound":0,"error":"'. $err . '"}';
         sendResultInfoAsJson($retValue);
     }
 
-    // return the things we found
-    function returnWithInfo($searchResults)
+    function returnWithInfo($searchResults, $numResultsFound, $total)
     {
-        $retValue = '{"results":[' . $searchResults . '],"error":""}';
+        // "numResultsFound"' . json_encode($searchCount) . '
+        $retValue = '{"numResultsFound":' . json_encode($numResultsFound) . ',"total":' . json_encode($total) . ',"results":' . json_encode($searchResults) . ',"error":""}';
         sendResultInfoAsJson($retValue);
     }
 ?>

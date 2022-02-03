@@ -2,12 +2,12 @@
     $inData = getRequestInfo();
     
     // inputs to the query
-    $contactName = $inData["contact"]; // contact to update
+    $contactInfo = $inData["contact"]; // contact to update
     $userId = $inData["userId"]; // current logged in user
-    $newName = $inData["updateWith"]; // new name
+    $newInfo = $inData["updateWith"]; // new name
 
     // establish sql connection to database
-    $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+    $conn = new mysqli("127.0.0.1", "TheBeast", "WeLoveCOP4331", "COP4331");
     if ($conn->connect_error)
     {
         returnWithError($conn->connect_error);
@@ -15,9 +15,10 @@
     else
     {
         // use update query with given data
-        // this will also update duplicates
-        $stmt = $conn->prepare("UPDATE Contacts SET Name = ? WHERE Name = ? and UserID=?");
-        $stmt->bind_param("ss", $newName, $contactName, $userId);
+        $stmt = $conn->prepare("UPDATE Contacts set FirstName = ?, LastName = ?, PhoneNumber = ?, Address = ?, Email = ? WHERE FirstName = ? and LastName = ? and PhoneNumber = ? and Address = ? and Email = ? and UserID=?");
+        
+        $stmt->bind_param("sssssssssss", $newInfo[0], $newInfo[1], $newInfo[4], $newInfo[2], $newInfo[3], 
+                                         $contactInfo[0], $contactInfo[1], $contactInfo[4], $contactInfo[2], $contactInfo[3], $userId);
         $stmt->execute();
         $stmt->close();
         $conn->close();
@@ -34,7 +35,7 @@
     function sendResultInfoAsJson($obj)
     {
         header('Content-type: application/json');
-		echo $obj;
+		    echo $obj;
     }
 
     // sends any error (if it exists) back to the frontend
