@@ -1,7 +1,8 @@
 // Login function
 // What else do i need to add
 
-const urlBase = 'http://143.198.109.82/LAMPAPI';
+const urlBase = 'http://contacts-20.xyz/LAMPAPI';
+//const urlBase = 'http://143.198.109.82/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -10,7 +11,7 @@ let lastName = "";
 
 // for load more button
 // increase this to display more contacts by default
-let defaultResultNum = 2; 
+let defaultResultNum = 3; 
 let lastSearch = "";
 
 $(document).ready(function() { 
@@ -159,7 +160,7 @@ function doRegister()
 			let firstname = document.getElementById("firstName").value;
 			let username = document.getElementById("username").value;
 			let password = md5(document.getElementById("password").value);
-			alert(password)
+		
 			
 			// uh lemme think
 
@@ -184,7 +185,7 @@ function doRegister()
 						if(userId < 1)
 						{
 							$("#registerResult").addClass("mt-1");
-							document.getElementById("registerResult").innerHTML = "Cannot register.";
+							document.getElementById("registerResult").innerHTML = "Username is taken";
 							return;
 						}
 						
@@ -243,7 +244,17 @@ function doSearch()
       {
         let jsonObject = JSON.parse(xhr.responseText);
 
-		
+		if (typeof jsonObject.results === 'undefined') {
+			defaultResultNum = -1;
+
+			// grey out the load more button here
+			$( "#load-more-button" ).prop("disabled",true);
+
+			return;
+		}
+
+		console.log(jsonObject.results);
+
 		for (const contact of jsonObject.results) {
 
 				$("#contactsTableBody").append("<tr>\
@@ -252,18 +263,20 @@ function doSearch()
 				<td>" + contact.Address + "</td>\
 				<td>" + contact.Email + "</td>\
 				<td>" + contact.PhoneNumber  + "</td>\
-				<td>\
+				<td style='width:100px; height:20px;'>\
 					<div class='row'>\
 						<div class='col'>\
-						<img src='images/trash-svgrepo-com.svg' class='img-fluid border border-dark rounded' data-bs-toggle='modal' data-bs-target='#DeleteContactModal' alt='Trashcan' onclick=addDeleteClass(this)>\
+						<img src='images/delete.png' style='max-height: 100%' class='img-fluid border border-dark rounded' data-bs-toggle='modal' data-bs-target='#DeleteContactModal' alt='Trashcan' onclick=addDeleteClass(this)>\
 						</div>\
 						<div class='col'>\
-						<img src='images/edit-icon.svg' class='img-fluid' data-bs-toggle='modal' data-bs-target='#EditContactModal'  alt='Edit Pencil' onclick=addEditClass(this)>\
+						<img src='images/editing.png' style='max-height: 100%' class='img-fluid' data-bs-toggle='modal' data-bs-target='#EditContactModal'  alt='Edit Pencil' onclick=addEditClass(this)>\
 						</div>\
 					</div>\
 				</td>\
 				</tr>");
 		}
+
+		
 
 		// to prevent unnecessary calls to the api
 		// numResults: the number of displayed results
@@ -292,7 +305,7 @@ function doSearch()
 function increaseResults()
 {
 	// how many more contacts to load per click
-	defaultResultNum += 2;
+	defaultResultNum += 3;
 	doSearch();
 }
 
@@ -312,6 +325,7 @@ function doAdd(firstName,lastName,address,email,phoneNumber)
 	try
 	{
 		xhr.send(jsonPayload);
+		
 	}
 	catch(err)
 	{
@@ -319,6 +333,8 @@ function doAdd(firstName,lastName,address,email,phoneNumber)
 		<td>" + err.message + "</td>\
 		</tr>");
 	}
+
+	// doSearch();
 }
 
 function doUpdate()
@@ -345,6 +361,7 @@ function doUpdate()
 			// Ignores update if no change was made
 			if (originalFirstName == newFirstName && originalLastName == newLastName && originalAddress == newAddress &&
 				originalEmail == newEmail && originalPhoneNum == newPhoneNum) {
+				$("#editDismissModal").click();
 				return;
 			} else {
 				$(editRow).find("td").eq(0).html(newFirstName)
@@ -447,13 +464,13 @@ function submitContactForm() {
 			<td>" + $(address).val() + "</td>\
 			<td>" + $(email).val() + "</td>\
 			<td>" + $(phoneNum).val() + "</td>\
-			<td>\
+			<td style='width:100px; height:20px;'>\
 				<div class='row'>\
 					<div class='col'>\
-					<img src='images/trash-svgrepo-com.svg' class='img-fluid border border-dark rounded' data-bs-toggle='modal' data-bs-target='#DeleteContactModal' alt='Trashcan' onclick=addDeleteClass(this)>\
+					<img src='images/delete.png' style='max-height: 100%' class='img-fluid border border-dark rounded' data-bs-toggle='modal' data-bs-target='#DeleteContactModal' alt='Trashcan' onclick=addDeleteClass(this)>\
 					</div>\
 					<div class='col'>\
-					<img src='images/edit-icon.svg' class='img-fluid' data-bs-toggle='modal' data-bs-target='#EditContactModal'  alt='Edit Pencil' onclick=addEditClass(this)>\
+					<img src='images/editing.png' style='max-height: 100%' class='img-fluid' data-bs-toggle='modal' data-bs-target='#EditContactModal'  alt='Edit Pencil' onclick=addEditClass(this)>\
 					</div>\
 				</div>\
 			</td>\
